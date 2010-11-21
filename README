@@ -36,7 +36,7 @@ The following is a example of Twig view configuration to put into your applicati
     resources.twig.options.viewSuffix = twig
     resources.twig.viewPaths[] = APPLICATION_PATH "/views/layouts"
     resources.twig.viewPaths[] = APPLICATION_PATH "/views/scripts"
-    resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
+    resources.twig.helperPath.My_View_Helper_ = "My/View/Helper"
 	
 
 Usage
