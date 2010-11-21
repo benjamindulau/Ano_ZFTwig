@@ -18,7 +18,7 @@ Installation
 * Add the following line to your application.ini :
 
     autoloaderNamespaces[] = "Ano_"
-	pluginPaths.Ano_Application_Resource = APPLICATION_PATH "/../library/Ano/Application/Resource"
+    pluginPaths.Ano_Application_Resource = APPLICATION_PATH "/../library/Ano/Application/Resource"
 	
 
 
@@ -34,7 +34,6 @@ The following is a example of Twig view configuration to put into your applicati
     resources.twig.options.debug = 0
     resources.twig.options.trim_blocks = 1
     resources.twig.options.viewSuffix = twig
-    resources.twig.viewPaths[] = APPLICATION_PATH "/views/layouts"
     resources.twig.viewPaths[] = APPLICATION_PATH "/views/scripts"
     resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
 	
@@ -58,7 +57,7 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
     {% hlp 'myHelper' with ['arg1', ['key1': 'val1', 'key2': 'val2'], 'arg3'] %}
 	
     (i.e. {% hlp 'url' with [['controller': 'index', 'action': 'my-action'], 'my_route'] %} )
-
+	
 * Adding a javascript file to the stack :
 
     {% javascript 'js/blog.js' %}
