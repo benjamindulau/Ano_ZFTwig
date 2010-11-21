@@ -34,6 +34,7 @@ The following is a example of Twig view configuration to put into your applicati
     resources.twig.options.debug = 0
     resources.twig.options.trim_blocks = 1
     resources.twig.options.viewSuffix = twig
+    resources.twig.viewPaths[] = APPLICATION_PATH "/views/layouts"
     resources.twig.viewPaths[] = APPLICATION_PATH "/views/scripts"
     resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
 	
@@ -76,11 +77,11 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 	
 * Adding a meta http-equiv to the stack :
 
-    {% metaHttpEquiv 'Content-Type' 'text/html; charset=utf-8' %}
+    {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
 	
 * Adding a regular meta to the stack :
 	
-    {% metaName 'description' 'My super website SEO description' %}
+    {% metaName 'description' with 'My super website SEO description' %}
 	
 * Rendering meta tags (i.e. in the head section) :
 
