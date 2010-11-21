@@ -1,0 +1,92 @@
+Ano_ZFTwig
+==========
+
+Ano_ZFTwig allows the use of twig with Zend Framework 1.1x.
+
+It contains:
+
+* A Zend Application resource plugin
+* A Zend View object
+* A twig tag to invoke any ZF view helper
+* Twig tags wrapper for some very used native ZF view helpers like url, headScript, headMeta, ...
+
+
+Installation
+============
+
+* Add "Ano" package to your library folder
+* Add the following line to your application.ini :
+
+    autoloaderNamespaces[] = "Ano_"
+	pluginPaths.Ano_Application_Resource = APPLICATION_PATH "/../library/Ano/Application/Resource"
+	
+
+
+Configuration
+=============
+
+The following is a example of Twig view configuration to put into your application.ini file :
+
+	resources.twig.options.charset = "utf-8"
+    resources.twig.options.strict_variables = 0
+    resources.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
+    resources.twig.options.auto_reload = 1
+    resources.twig.options.debug = 0
+    resources.twig.options.trim_blocks = 1
+    resources.twig.options.viewSuffix = twig
+    resources.twig.viewPaths[] = APPLICATION_PATH "/views/layouts"
+    resources.twig.viewPaths[] = APPLICATION_PATH "/views/scripts"
+	resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
+	
+
+Usage
+=====
+
+You have nothing to change into your controllers to render twig templates.
+The view renderer will automatically render a twig template from files with the extension you previously configured (i.e index.twig).
+
+For general usage, read the documentation from the official website : http://www.twig-project.org/documentation
+
+
+Tags coming with Ano_ZFTwig
+---------------------------
+
+Here are the syntaxes for the twig tags coming with Ano_ZFTwig
+
+* Invoke any view helper :
+
+	{% hlp 'myHelper' with ['arg1', ['key1': 'val1', 'key2': 'val2'], 'arg3'] %}
+	
+	(i.e. {% hlp 'url' with [['controller': 'index', 'action': 'my-action'], 'my_route'] %} )
+
+* Adding a javascript file to the stack :
+
+    {% javascript 'js/blog.js' %}
+	
+* Rendering javascript html tags (i.e. in the head section) :
+
+    {% javascripts %}
+	
+* Adding a stylesheet link to the stack :
+
+	{% stylesheet 'css/blog.css' with ['media': 'screen'] %}
+
+* Rendering stylesheet links (i.e. in the head section) :
+
+    {% stylesheets %}
+	
+* Adding a meta http-equiv to the stack :
+
+	{% metaHttpEquiv 'Content-Type' 'text/html; charset=utf-8' %}
+	
+* Adding a regular meta to the stack :
+	
+	{% metaName 'description' 'My super website SEO description' %}
+	
+* Rendering meta tags (i.e. in the head section) :
+
+	{% metas %}
+	
+* Generate an url from a route :
+
+	{% url 'my_route' with ['id': post.id] %}
