@@ -23,6 +23,23 @@ class Ano_ZFTwig_Node_DefaultHelperNode extends Twig_Node
     {
         $helper = $this->getAttribute('helper');
         $method = $this->getAttribute('method');
+        $mode = 'append';
+
+        $values = $this->getNode('values');    
+        foreach ($values as $i => $value) {
+            if ($value->hasNode('mode')) {
+                $mode = $value->getNode('mode')->getAttribute('value');
+                $value->removeNode('mode');
+                if ($value->count() <= 0) {
+                    $values->removeNode($i);
+                }
+            }
+        }
+
+        if (!in_array($mode, array('append', 'prepend'))) {
+            $mode = 'append';
+        }
+        $method = str_replace('%mode%', $mode, $method);
 
         $compiler->addDebugInfo($this);
         if ('render' == $method) {
@@ -40,7 +57,7 @@ class Ano_ZFTwig_Node_DefaultHelperNode extends Twig_Node
             }
             $compiler->raw('(');
 
-            foreach ($this->getNode('values') as $i => $value) {
+            foreach ($values as $i => $value) {
                 $compiler->subcompile($value);
                 if ($i !== count($this->getNode('values')) - 1) {
                     $compiler->raw(', ');
@@ -48,7 +65,6 @@ class Ano_ZFTwig_Node_DefaultHelperNode extends Twig_Node
             }
             
             $compiler->raw(");");
-
         }
     }
 }

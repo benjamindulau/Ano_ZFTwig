@@ -49,7 +49,7 @@ class Ano_ZFTwig_View extends Zend_View_Abstract
         $twig = new Ano_ZFTwig_Environment($this, $loader, $options);
         $twig->addExtension(new Twig_Extension_Escaper(true));
         $twig->addExtension(new Ano_ZFTwig_Extension_Helper());
-        
+
         $this->setEngine($twig);
     }
 

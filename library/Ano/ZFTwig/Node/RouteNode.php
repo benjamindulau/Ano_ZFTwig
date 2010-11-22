@@ -1,6 +1,6 @@
 <?php
 /**
- * Compiles url node to PHP.
+ * Compiles route node to PHP.
  * @see Ano_ZFTwig_Extension_Helper
  *
  * @package     Ano_ZFTwig
