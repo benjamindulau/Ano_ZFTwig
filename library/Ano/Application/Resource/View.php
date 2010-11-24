@@ -1,0 +1,75 @@
+<?php
+/**
+ * View resource for Ano_View
+ * Supports multiple template engines
+ *
+ * @package    Ano_Application
+ * @subpackage Resource
+ * @author     Benjamin Dulau <benjamin.dulau@gmail.com>
+ */
+class Ano_Application_Resource_View extends Zend_Application_Resource_ResourceAbstract
+{
+    /**
+     * @var Zend_View_Interface
+     */
+    protected $_view;
+
+    /**
+     * @var array
+     */
+    protected $_options = array();
+
+    /**
+     * Defined by Zend_Application_Resource_Resource
+     *
+     * @return Zend_View
+     */
+    public function init()
+    {
+        $view = $this->getView();
+
+        $viewSuffix = 'phtml';        
+        if (array_key_exists('engines', $this->_options)
+                && is_array($this->_options['engines'])) {            
+
+            foreach($this->_options['engines'] as $key => $engineConfig) {
+                if (array_key_exists('class', $engineConfig)) {
+                    $engineClass = $engineConfig['class'];
+                    unset($engineConfig['class']);
+                    
+                    $engine = new $engineClass($view, $engineConfig);
+                    
+                    $view->addTemplateEngine($key, $engine);
+                    if (array_key_exists('isDefault', $engineConfig)
+                        && true === (bool)$engineConfig['isDefault']) {                        
+                        $view->setDefaultTemplateEngine($key);
+                        $viewSuffix = $engine->getViewSuffix();
+                    }
+                }               
+            }
+
+        }
+
+        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, array(
+            'viewSuffix' => $viewSuffix
+        ));
+        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+        
+        return $view;
+    }
+
+    /**
+     * Retrieve view object
+     *
+     * @return Zend_View
+     */
+    public function getView()
+    {
+        if (null === $this->_view) {            
+            $this->_options = $this->getOptions();
+            $this->_view = new Ano_View($this->_options);
+        }
+        
+        return $this->_view;
+    }
+}
