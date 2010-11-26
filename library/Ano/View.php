@@ -19,6 +19,11 @@ class Ano_View extends Zend_View_Abstract
      * @var string Key in $templateEngines of the default engine
      */
     protected $defaultTemplateEngine = null;
+
+    /**
+     * @var string Key in $templateEngines of current template Engine
+     */
+    protected $templateEngine = null;
     
 
     /**
@@ -41,6 +46,17 @@ class Ano_View extends Zend_View_Abstract
     }
 
     /**
+     * @param string $key Set the key in $templateEngines of the
+     *                    active Engine.
+     * @return Ano_View
+     */
+    public function setTemplateEngine($key)
+    {
+        $this->templateEngine = $key;
+        return $this;
+    }
+
+    /**
      * Checks if the template engine with key $key exists
      * in $templateEngines.
      *
@@ -53,18 +69,25 @@ class Ano_View extends Zend_View_Abstract
     }
 
     /**
-     * Gets the template engine instance with key $key
+     * Returns the current active template engine
+     * or the default one.
      *
-     * @param string $key the registered engine key
      * @return Ano_View_Engine_Interface
+     * @throws Zend_View_Exception
      */
-    public function getTemplateEngine($key)
+    public function getTemplateEngine()
     {
-        if ($this->hasTemplateEngine($key)) {
-            return $this->templateEngines[$key];
+        $currentEngine = $this->templateEngine;
+        if ($this->hasTemplateEngine($currentEngine)) {
+            return $this->templateEngines[$currentEngine];
         }
 
-        throw new Zend_View_Exception(sprintf('Template engine "%s" not found', $key));
+        $defaultEngine = $this->defaultTemplateEngine;
+        if ($this->hasTemplateEngine($defaultEngine)) {
+            return $this->templateEngines[$defaultEngine];
+        }
+
+        throw new Zend_View_Exception('No template engine were found');
     }
 
     /**
@@ -91,14 +114,11 @@ class Ano_View extends Zend_View_Abstract
      */
     public function render($name)
     {
-        // hack for Zend_Layout which has its own view suffix handling
-        $engine = $this->getDefaultTemplateEngine();
-        $filename = $name;
-        if ($this->hasTemplateEngine($engine)) {
-            $suffix = $this->getTemplateEngine($engine)->getViewSuffix();
-            $fileParts = pathinfo($name);
-            $filename = str_replace('.' . $fileParts['extension'], '.' . $suffix, $name);
-        }
+        // hack for Zend_Layout which has its own view suffix handling        
+        $filename = $name;        
+        $suffix = $this->getTemplateEngine()->getViewSuffix();
+        $fileParts = pathinfo($name);
+        $filename = str_replace('.' . $fileParts['extension'], '.' . $suffix, $name);
         
         return parent::render($filename);
     }
@@ -113,12 +133,6 @@ class Ano_View extends Zend_View_Abstract
     public function _run()
     {
         $filename = func_get_arg(0);
-        $engine = $this->getDefaultTemplateEngine();
-        if ($this->hasTemplateEngine($engine)) {
-            $this->getTemplateEngine($engine)->render($filename, get_object_vars($this));
-        }
-        else {
-            include $filename;
-        }
+        $this->getTemplateEngine()->render($filename, get_object_vars($this));
     }
 }
