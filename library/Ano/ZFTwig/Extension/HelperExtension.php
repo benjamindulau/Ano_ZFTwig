@@ -9,7 +9,7 @@
  * @subpackage  Extension
  * @author      Benjamin Dulau <benjamin.dulau@gmail.com>
  */
-class Ano_ZFTwig_Extension_Helper extends Twig_Extension
+class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
 {
     /**
      * Returns the token parser instance to add to the existing list.

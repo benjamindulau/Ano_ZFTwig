@@ -26,7 +26,8 @@ class Ano_ZFTwig_View_Engine_TwigEngine extends Ano_View_Engine_Abstract
         $loader = new Ano_ZFTwig_Loader_FileLoader($this->getView()->getScriptPaths());
         $twig = new Ano_ZFTwig_Environment($this->getView(), $loader, $config);
         $twig->addExtension(new Twig_Extension_Escaper(true));
-        $twig->addExtension(new Ano_ZFTwig_Extension_Helper());
+        $twig->addExtension(new Ano_ZFTwig_Extension_HelperExtension());
+        $twig->addExtension(new Ano_ZFTwig_Extension_TransExtension());
 
         $this->setEnvironment($twig);
     }
