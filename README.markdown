@@ -132,7 +132,6 @@ Usage example
 
 * layout.twig
 
-    <html>
         <head>
             <title>{% block title 'Default title' %}</title>
             {% block metas %}
@@ -153,7 +152,6 @@ Usage example
             <h1>{% block 'title1' 'Default Title' %}</h1>
             {% block content %}{% endblock %}
         </body>
-    </html>
 
 * twig-help.twig
 
@@ -193,7 +191,6 @@ Usage example
 
 * layout.twig :
 
-    <html>
         <head>
             {% title %}
             {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
@@ -208,7 +205,6 @@ Usage example
             <h1>{% holder 'title1' %}</h1>
             {% layout 'content' %}
         </body>
-    </html>
 
 * twig-help.twig :
 
