@@ -12,6 +12,7 @@ It contains:
 
 The use of Zend_Layout is supported but is optional.
 
+Ano_ZFTwig allows the use of multiple template engines.
 
 Installation
 ============
@@ -29,23 +30,27 @@ Configuration
 
 The following is a example of Twig view configuration to put into your application.ini file :
 
-    resources.twig.options.charset = "utf-8"
-    resources.twig.options.strict_variables = 0
-    resources.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
-    resources.twig.options.auto_reload = 1
-    resources.twig.options.debug = 0
-    resources.twig.options.trim_blocks = 1
-    resources.twig.options.viewSuffix = twig
-    resources.twig.viewPaths[] = APPLICATION_PATH "/views/layouts"
-    resources.twig.viewPaths[] = APPLICATION_PATH "/views/scripts"
-    resources.twig.helperPath.My_View_Helper_ = "My/View/Helper"
+    resources.view.engines.php.class = "Ano_View_Engine_Php"
+    resources.view.engines.php.viewSuffix = "phtml"
+
+    resources.view.engines.twig.class = "Ano_ZFTwig_View_Engine_TwigEngine"
+    resources.view.engines.twig.viewSuffix = "twig"
+    resources.view.engines.twig.isDefault = 1
+    resources.view.engines.twig.options.charset = "utf-8"
+    resources.view.engines.twig.options.strict_variables = 0
+    resources.view.engines.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
+    resources.view.engines.twig.options.auto_reload = 1
+    resources.view.engines.twig.options.debug = 0
+    resources.view.engines.twig.options.trim_blocks = 1
+    resources.view.engines.twig.options.viewSuffix = twig
+
+    resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
 
 
 If you use Zend_Layout :
 
     resources.layout.layout = "layout" 
-    resources.layout.layoutPath = APPLICATION_PATH "/views/layouts" 
-    resources.layout.viewSuffix = "twig"
+    resources.layout.layoutPath = APPLICATION_PATH "/views/layouts"
 	
 
 Usage
@@ -114,6 +119,11 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
     
     {% holder 'titleh1' %}
 
+* Translate a message
+
+    {% trans 'message' %}
+    {% metaName 'description' with 'My message'|trans %}
+
 
 Usage example
 -------------
@@ -122,103 +132,103 @@ Usage example
 
 * layout.twig
 
-<!DOCTYPE HTML> 
-<html> 
-    <head> 
-        <title>{% block title 'Default title' %}</title>
-        {% block metas %}
-            {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
-        {% endblock %}
-        {% block javascripts %}
-            {% javascript 'js/jquery.js' %}
-        {% endblock %}
-        {% block stylesheets %}
-            {% stylesheet 'css/layout.css' %}
-        {% endblock %}
+    <!DOCTYPE HTML>
+    <html>
+        <head>
+            <title>{% block title 'Default title' %}</title>
+            {% block metas %}
+                {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
+            {% endblock %}
+            {% block javascripts %}
+                {% javascript 'js/jquery.js' %}
+            {% endblock %}
+            {% block stylesheets %}
+                {% stylesheet 'css/layout.css' %}
+            {% endblock %}
 
-        {% metas %} 
-        {% javascripts %} 
-        {% stylesheets %} 
-    </head> 
-    <body> 
-        <h1>{% block 'title1' 'Default Title' %}</h1>
-        {% block content %}{% endblock %}
-    </body> 
-</html>
+            {% metas %}
+            {% javascripts %}
+            {% stylesheets %}
+        </head>
+        <body>
+            <h1>{% block 'title1' 'Default Title' %}</h1>
+            {% block content %}{% endblock %}
+        </body>
+    </html>
 
 * twig-help.twig
 
-{% extends 'layouts/layout.twig' %}
+    {% extends 'layouts/layout.twig' %}
 
-{% block title 'Anonymation - Twig for Zend Framework' %}
+    {% block title 'Anonymation - Twig for Zend Framework' %}
 
-{% block metas %}
-    {% parent %}
-    {% metaName 'description' with 'My super twig description for SEO' %}
-{% endblock %}
-{% block javascripts %}
-    {% parent %}
-    {% javascript 'js/twig.js' %}
-{% endblock %}
-{% block stylesheets %}
-    {% parent %}
-    {% stylesheet 'css/twig.css' %}
-{% endblock %}
+    {% block metas %}
+        {% parent %}
+        {% metaName 'description' with 'My super twig description for SEO' %}
+    {% endblock %}
+    {% block javascripts %}
+        {% parent %}
+        {% javascript 'js/twig.js' %}
+    {% endblock %}
+    {% block stylesheets %}
+        {% parent %}
+        {% stylesheet 'css/twig.css' %}
+    {% endblock %}
 
-{% block 'title1' 'Some help about Twig' %}
+    {% block 'title1' 'Some help about Twig' %}
 
-{% block content %}
-    <div id="more-information"> 
-        <p> 
-            Helpful Links: <br /> 
-            <a href="http://www.twig-project.org/documentation">Twig documentation</a> | 
-            <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a> 
-        </p>
-    </div> 
-    <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}"> 
-        &lt; Back to homepage 
-    </a> 
-{% endblock %}
+    {% block content %}
+        <div id="more-information">
+            <p>
+                Helpful Links: <br />
+                <a href="http://www.twig-project.org/documentation">Twig documentation</a> |
+                <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
+            </p>
+        </div>
+        <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
+            &lt; Back to homepage
+        </a>
+    {% endblock %}
 
 ## With Zend_Layout
 
 * layout.twig :
 
-<!DOCTYPE HTML> 
-<html> 
-    <head> 
-        {% title %} 
-        {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %} 
-        {% javascript 'js/jquery.js' with ['mode': 'prepend'] %} 
-        {% stylesheet 'css/layout.css' with ['mode': 'prepend'] %}
-        <base href="{% hlp 'serverUrl' %}/{% hlp 'baseUrl' %}" />
-        {% metas %} 
-        {% javascripts %} 
-        {% stylesheets %} 
-    </head> 
-    <body> 
-        <h1>{% holder 'title1' %}</h1> 
-        {% layout 'content' %} 
-    </body> 
-</html>
+    <!DOCTYPE HTML>
+    <html>
+        <head>
+            {% title %}
+            {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
+            {% javascript 'js/jquery.js' with ['mode': 'prepend'] %}
+            {% stylesheet 'css/layout.css' with ['mode': 'prepend'] %}
+            <base href="{% hlp 'serverUrl' %}/{% hlp 'baseUrl' %}" />
+            {% metas %}
+            {% javascripts %}
+            {% stylesheets %}
+        </head>
+        <body>
+            <h1>{% holder 'title1' %}</h1>
+            {% layout 'content' %}
+        </body>
+    </html>
 
 * twig-help.twig :
 
-{# layout override #} 
+    {# layout override #}
 
-{% headTitle 'Anonymation - Twig for Zend Framework' %}
-{% metaName 'description' with 'My super twig description for SEO' %}
-{% javascript 'js/twig.js' %} 
-{% holder 'title1' with 'Some help about Twig' %} 
+    {% headTitle 'Anonymation - Twig for Zend Framework' %}
+    {% metaName 'description' with 'My super twig description for SEO' %}
+    {% javascript 'js/twig.js' %}
+    {% holder 'title1' with 'Some help about Twig' %}
 
-{# content #} 
-   <div id="more-information"> 
-        <p> 
-            Helpful Links: <br />
-            <a href="http://www.twig-project.org/documentation">Twig documentation</a> | 
-            <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a> 
-        </p> 
-    </div> 
-    <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}"> 
-        &lt; Back to homepage 
-    </a>
+    {# content #}
+       <div id="more-information">
+            <p>
+                Helpful Links: <br />
+                <a href="http://www.twig-project.org/documentation">Twig documentation</a> |
+                <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
+            </p>
+        </div>
+        <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
+            &lt; Back to homepage
+        </a>
