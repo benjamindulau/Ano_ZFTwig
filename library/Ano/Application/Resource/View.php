@@ -50,10 +50,9 @@ class Ano_Application_Resource_View extends Zend_Application_Resource_ResourceAb
 
         }
 
-        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, array(
-            'viewSuffix' => $viewSuffix
-        ));
-        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+        $viewRenderer->setView($view);
+        $viewRenderer->setViewSuffix($viewSuffix);
         
         return $view;
     }
