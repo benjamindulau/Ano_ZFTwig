@@ -128,7 +128,7 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 Usage example
 -------------
 
-## Without Zend_Layout and by using templates inheritance.
+### Without Zend_Layout and by using templates inheritance.
 
 * layout.twig
 
@@ -188,7 +188,7 @@ Usage example
         {% endblock %}
 
 
-## With Zend_Layout
+### With Zend_Layout
 
 * layout.twig :
 
