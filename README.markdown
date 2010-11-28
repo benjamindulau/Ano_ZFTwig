@@ -132,7 +132,6 @@ Usage example
 
 * layout.twig
 
-    <!DOCTYPE HTML>
     <html>
         <head>
             <title>{% block title 'Default title' %}</title>
@@ -194,7 +193,6 @@ Usage example
 
 * layout.twig :
 
-    <!DOCTYPE HTML>
     <html>
         <head>
             {% title %}
