@@ -71,58 +71,58 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 
 * Invoke any view helper :
 
-    {% hlp 'myHelper' with ['arg1', ['key1': 'val1', 'key2': 'val2'], 'arg3'] %}
+        {% hlp 'myHelper' with ['arg1', ['key1': 'val1', 'key2': 'val2'], 'arg3'] %}
 	
     (i.e. {% hlp 'url' with [['controller': 'index', 'action': 'my-action'], 'my_route'] %} )
 	
 * Adding a javascript file to the stack :
 
-    {% javascript 'js/blog.js' %}
+        {% javascript 'js/blog.js' %}
 	
 * Rendering javascript html tags (i.e. in the head section) :
 
-    {% javascripts %}
+        {% javascripts %}
 	
 * Adding a stylesheet link to the stack :
 
-    {% stylesheet 'css/blog.css' with ['media': 'screen'] %}
+        {% stylesheet 'css/blog.css' with ['media': 'screen'] %}
 
 * Rendering stylesheet links (i.e. in the head section) :
 
-    {% stylesheets %}
+        {% stylesheets %}
 	
 * Adding a meta http-equiv to the stack :
 
-    {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
+        {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
 	
 * Adding a regular meta to the stack :
 	
-    {% metaName 'description' with 'My super website SEO description' %}
+        {% metaName 'description' with 'My super website SEO description' %}
 	
 * Rendering meta tags (i.e. in the head section) :
 
-    {% metas %}
+        {% metas %}
 	
 * Generate an url from a route :
 
-    {% route 'my_route' with ['id': post.id] %}
+        {% route 'my_route' with ['id': post.id] %}
 
 * Include layout section :
 
-    {% layout 'content' %} (= <?php echo $this->layout()->content; ?>
+        {% layout 'content' %} (= <?php echo $this->layout()->content; ?>
 
 * Setting a placeholder :
 
-    {% holder 'titleh1' with 'My super title' %}
+        {% holder 'titleh1' with 'My super title' %}
 
 * Displaying a placeholder :
     
-    {% holder 'titleh1' %}
+        {% holder 'titleh1' %}
 
 * Translate a message
 
-    {% trans 'message' %}
-    {% metaName 'description' with 'My message'|trans %}
+        {% trans 'message' %}
+        {% metaName 'description' with 'My message'|trans %}
 
 
 Usage example
@@ -155,37 +155,37 @@ Usage example
 
 * twig-help.twig
 
-    {% extends 'layouts/layout.twig' %}
+        {% extends 'layouts/layout.twig' %}
 
-    {% block title 'Anonymation - Twig for Zend Framework' %}
+        {% block title 'Anonymation - Twig for Zend Framework' %}
 
-    {% block metas %}
-        {% parent %}
-        {% metaName 'description' with 'My super twig description for SEO' %}
-    {% endblock %}
-    {% block javascripts %}
-        {% parent %}
-        {% javascript 'js/twig.js' %}
-    {% endblock %}
-    {% block stylesheets %}
-        {% parent %}
-        {% stylesheet 'css/twig.css' %}
-    {% endblock %}
+        {% block metas %}
+            {% parent %}
+            {% metaName 'description' with 'My super twig description for SEO' %}
+        {% endblock %}
+        {% block javascripts %}
+            {% parent %}
+            {% javascript 'js/twig.js' %}
+        {% endblock %}
+        {% block stylesheets %}
+            {% parent %}
+            {% stylesheet 'css/twig.css' %}
+        {% endblock %}
 
-    {% block 'title1' 'Some help about Twig' %}
+        {% block 'title1' 'Some help about Twig' %}
 
-    {% block content %}
-        <div id="more-information">
-            <p>
-                Helpful Links: <br />
-                <a href="http://www.twig-project.org/documentation">Twig documentation</a> |
-                <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
-            </p>
-        </div>
-        <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
-            &lt; Back to homepage
-        </a>
-    {% endblock %}
+        {% block content %}
+            <div id="more-information">
+                <p>
+                    Helpful Links: <br />
+                    <a href="http://www.twig-project.org/documentation">Twig documentation</a> |
+                    <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
+                </p>
+            </div>
+            <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
+                &lt; Back to homepage
+            </a>
+        {% endblock %}
 
 
 ## With Zend_Layout
@@ -209,21 +209,21 @@ Usage example
 
 * twig-help.twig :
 
-    {# layout override #}
+        {# layout override #}
 
-    {% headTitle 'Anonymation - Twig for Zend Framework' %}
-    {% metaName 'description' with 'My super twig description for SEO' %}
-    {% javascript 'js/twig.js' %}
-    {% holder 'title1' with 'Some help about Twig' %}
+        {% headTitle 'Anonymation - Twig for Zend Framework' %}
+        {% metaName 'description' with 'My super twig description for SEO' %}
+        {% javascript 'js/twig.js' %}
+        {% holder 'title1' with 'Some help about Twig' %}
 
-    {# content #}
-       <div id="more-information">
-            <p>
-                Helpful Links: <br />
-                <a href="http://www.twig-project.org/documentation">Twig documentation</a> |
-                <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
-            </p>
-        </div>
-        <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
-            &lt; Back to homepage
-        </a>
+        {# content #}
+           <div id="more-information">
+                <p>
+                    Helpful Links: <br />
+                    <a href="http://www.twig-project.org/documentation">Twig documentation</a> |
+                    <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
+                </p>
+            </div>
+            <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
+                &lt; Back to homepage
+            </a>
