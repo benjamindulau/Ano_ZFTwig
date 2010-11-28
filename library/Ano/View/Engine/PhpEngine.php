@@ -6,6 +6,9 @@
  * @subpackage Engine
  * @author     Benjamin Dulau <benjamin.dulau@gmail.com>
  */
+
+require_once 'Ano/View/Engine/Abstract.php';
+
 class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
 {
     /**
@@ -28,7 +31,7 @@ class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
     /**
      * @param array $config Configuration key-value pairs.
      */
-    public function init($config = array())
+    public function init(array $config = array())
     {
         $this->_useViewStream = (bool) ini_get('short_open_tag') ? false : true;
         if ($this->_useViewStream) {
@@ -72,7 +75,7 @@ class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
      * @param mixed  $vars     The vars to assign to the template
      */
     public function render($template, $vars = null)
-    {                
+    {
         if ($this->_useViewStream && $this->useStreamWrapper()) {
             include 'zend.view://' . $template;
         } else {
@@ -102,7 +105,7 @@ class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
      * @return string The result of the helper output.
      */
     public function __call($name, $args)
-    {        
+    {
         return $this->getView()->__call($name, $args);
     }
 
@@ -114,7 +117,7 @@ class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
      * @return mixed
      */
     public function __get($key)
-    {        
+    {
         return $this->getView()->$key;
     }
 

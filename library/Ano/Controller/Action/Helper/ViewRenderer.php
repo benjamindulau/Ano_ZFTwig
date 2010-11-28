@@ -7,6 +7,9 @@
  * @subpackage Resource
  * @author     Benjamin Dulau <benjamin.dulau@gmail.com>
  */
+
+require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
+
 class Ano_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_Helper_ViewRenderer
 {
 

@@ -24,7 +24,7 @@ class Ano_View extends Zend_View_Abstract
      * @var string Key in $templateEngines of current template Engine
      */
     protected $templateEngine = null;
-    
+
 
     /**
      * @param string $key Set the key in $templateEngines of the
@@ -87,6 +87,7 @@ class Ano_View extends Zend_View_Abstract
             return $this->templateEngines[$defaultEngine];
         }
 
+        require_once 'Zend/View/Exception.php';
         throw new Zend_View_Exception('No template engine were found');
     }
 
@@ -114,12 +115,12 @@ class Ano_View extends Zend_View_Abstract
      */
     public function render($name)
     {
-        // hack for Zend_Layout which has its own view suffix handling        
-        $filename = $name;        
+        // hack for Zend_Layout which has its own view suffix handling
+        $filename = $name;
         $suffix = $this->getTemplateEngine()->getViewSuffix();
         $fileParts = pathinfo($name);
         $filename = str_replace('.' . $fileParts['extension'], '.' . $suffix, $name);
-        
+
         return parent::render($filename);
     }
 

@@ -6,6 +6,9 @@
  * @subpackage  Engine
  * @author      Benjamin Dulau <benjamin.dulau@gmail.com>
  */
+
+require_once 'Ano/View/Engine/Interface.php';
+
 abstract class Ano_View_Engine_Abstract implements Ano_View_Engine_Interface
 {
     /**
@@ -41,7 +44,7 @@ abstract class Ano_View_Engine_Abstract implements Ano_View_Engine_Interface
         else {
             $this->init();
         }
-        
+
     }
 
     /**
@@ -52,7 +55,7 @@ abstract class Ano_View_Engine_Abstract implements Ano_View_Engine_Interface
     public function init(array $config = array())
     {
     }
-    
+
     /**
      * Returns the view
      *
