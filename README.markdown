@@ -12,6 +12,7 @@ It contains:
 
 The use of Zend_Layout is supported but is optional.
 
+Ano_ZFTwig allows the use of multiple template engines.
 
 Installation
 ============
@@ -29,23 +30,27 @@ Configuration
 
 The following is a example of Twig view configuration to put into your application.ini file :
 
-    resources.twig.options.charset = "utf-8"
-    resources.twig.options.strict_variables = 0
-    resources.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
-    resources.twig.options.auto_reload = 1
-    resources.twig.options.debug = 0
-    resources.twig.options.trim_blocks = 1
-    resources.twig.options.viewSuffix = twig
-    resources.twig.viewPaths[] = APPLICATION_PATH "/views/layouts"
-    resources.twig.viewPaths[] = APPLICATION_PATH "/views/scripts"
-    resources.twig.helperPath.My_View_Helper_ = "My/View/Helper"
+    resources.view.engines.php.class = "Ano_View_Engine_Php"
+    resources.view.engines.php.viewSuffix = "phtml"
+
+    resources.view.engines.twig.class = "Ano_ZFTwig_View_Engine_TwigEngine"
+    resources.view.engines.twig.viewSuffix = "twig"
+    resources.view.engines.twig.isDefault = 1
+    resources.view.engines.twig.options.charset = "utf-8"
+    resources.view.engines.twig.options.strict_variables = 0
+    resources.view.engines.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
+    resources.view.engines.twig.options.auto_reload = 1
+    resources.view.engines.twig.options.debug = 0
+    resources.view.engines.twig.options.trim_blocks = 1
+    resources.view.engines.twig.options.viewSuffix = twig
+
+    resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
 
 
 If you use Zend_Layout :
 
     resources.layout.layout = "layout" 
-    resources.layout.layoutPath = APPLICATION_PATH "/views/layouts" 
-    resources.layout.viewSuffix = "twig"
+    resources.layout.layoutPath = APPLICATION_PATH "/views/layouts"
 	
 
 Usage
@@ -113,6 +118,11 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 * Displaying a placeholder :
     
     {% holder 'titleh1' %}
+
+* Translate a message
+
+    {% trans 'message' %}
+    {% metaName 'description' with 'My message'|trans %}
 
 
 Usage example
