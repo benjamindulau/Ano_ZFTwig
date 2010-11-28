@@ -1,11 +1,13 @@
 <?php
 /**
- * View resource for Ano_View
- * Supports multiple template engines
+ * ViewRenderer
+ * Supports template engine switching by annotation system
+ * Syntax : @render php
+ * 
  *
- * @package    Ano_Application
- * @subpackage Resource
- * @author     Benjamin Dulau <benjamin.dulau@gmail.com>
+ * @package    Ano_Controller_Action
+ * @subpackage Helper
+ * @author     Mickael Perraud <perraud.mickael@orange.fr>
  */
 class Ano_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_Helper_ViewRenderer
 {
