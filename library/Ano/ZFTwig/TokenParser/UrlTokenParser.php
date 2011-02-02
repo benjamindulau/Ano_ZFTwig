@@ -1,5 +1,17 @@
 <?php
 /**
+ * This file is part of the Ano_ZFTwig package
+ * 
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.
+ *
+ * @copyright  Copyright (c) 2010-2011 Benjamin Dulau <benjamin.dulau@gmail.com>
+ * @license    New BSD License
+ */
+
+/**
  * Wrapper for Zend Framework 1.1x url view helper.
  * Syntax : {% url 'my_route' with ['param1': 'value1'] %}
  *
