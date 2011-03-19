@@ -35,8 +35,9 @@ class Ano_ZFTwig_TokenParser_HelperTokenParser extends Twig_TokenParser
         $helper = $this->parser->getStream()->expect(Twig_Token::STRING_TYPE)->getValue();
 
         $attributes = null;
-        if ($stream->test('with')) {
+        if ($stream->test(Twig_Token::NAME_TYPE, 'with')) {
             $stream->next();
+            
             $attributes = $this->parser->getExpressionParser()->parseExpression();
         }
 

@@ -30,19 +30,18 @@ Configuration
 
 The following is a example of Twig view configuration to put into your application.ini file :
 
-    resources.view.engines.php.class = "Ano_View_Engine_Php"
+    resources.view.engines.php.class = "Ano_View_Engine_PhpEngine"
     resources.view.engines.php.viewSuffix = "phtml"
 
     resources.view.engines.twig.class = "Ano_ZFTwig_View_Engine_TwigEngine"
-    resources.view.engines.twig.viewSuffix = "twig"
     resources.view.engines.twig.isDefault = 1
+    resources.view.engines.twig.viewSuffix = "twig"    
     resources.view.engines.twig.options.charset = "utf-8"
     resources.view.engines.twig.options.strict_variables = 0
     resources.view.engines.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
     resources.view.engines.twig.options.auto_reload = 1
     resources.view.engines.twig.options.debug = 0
-    resources.view.engines.twig.options.trim_blocks = 1
-    resources.view.engines.twig.options.viewSuffix = twig
+    resources.view.engines.twig.options.trim_blocks = 1    
 
     resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
 

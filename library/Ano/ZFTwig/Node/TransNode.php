@@ -32,7 +32,7 @@ class Ano_ZFTwig_Node_TransNode extends Twig_Node
      *
      * @param Twig_Compiler A Twig_Compiler instance
      */
-    public function compile($compiler)
+    public function compile(Twig_Compiler $compiler)
     {
         $compiler->addDebugInfo($this)
                  ->write('echo $this->env->getView()->translate(')

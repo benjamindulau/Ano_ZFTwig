@@ -34,20 +34,11 @@ class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
             // {% headTitle 'My page title' %}
             new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('headTitle', '<title>', 'headTitle', ''),
 
-            // {% title %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('title', '', 'headTitle', 'render'),
-
             // {% javascript 'js/blog.js' %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('javascript', '<js> [with <arguments:array>]', 'headScript', '%mode%File'),
-
-            // {% javascripts %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('javascripts', '', 'headScript', 'render'),
+            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('javascript', '<js> [with <array>]', 'headScript', '%mode%File'),
 
             // {% stylesheet 'css/blog.css' with ['media': 'screen'] %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('stylesheet', '<css> [with <arguments:array>]', 'headLink', '%mode%Stylesheet'),
-
-            // {% stylesheets %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('stylesheets', '', 'headLink', 'render'),
+            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('stylesheet', '<css> [with <array>]', 'headLink', '%mode%Stylesheet'),
 
             // {% metaName 'description' 'My super website SEO description' %}
             new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('metaName', '<metaName> [with <constant>]', 'headMeta', '%mode%Name'),
@@ -55,22 +46,77 @@ class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
             // {% metaHttpEquiv 'Content-Type' 'text/html; charset=utf-8' %}
             new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('metaHttpEquiv', '<metaHttpEquiv> [with <constant>]', 'headMeta', '%mode%HttpEquiv'),
 
-            // {% metas %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('metas', '', 'headMeta', 'render'),
-
-            // {% route 'my_route' with ['id': post.id] %}
-            new Ano_ZFTwig_TokenParser_RouteTokenParser(),
-
             // {% hlp 'helper' with [with <arguments:array>] %}
             new Ano_ZFTwig_TokenParser_HelperTokenParser(),
 
             // {% layout 'content' %}
             new Ano_ZFTwig_TokenParser_LayoutTokenParser(),
-
-            // {% holder 'pageTitle' %}
-            // {% holder 'pageTitle' with 'My wonderful web page' %}
-            new Ano_ZFTwig_TokenParser_HolderTokenParser(),
         );
+    }
+
+    /**
+     * Returns a list of functions to add to the existing list.
+     *
+     * @return array An array of functions
+     */
+    public function getFunctions()
+    {
+        return array(
+            'headTitle'    => new \Twig_Function_Method($this, 'getHeadTitle', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
+            'javascripts'  => new \Twig_Function_Method($this, 'getJavascripts', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
+            'stylesheets'  => new \Twig_Function_Method($this, 'getStylesheets', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
+            'metas'  => new \Twig_Function_Method($this, 'getMetas', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
+            'url'  => new \Twig_Function_Method($this, 'getUrl', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
+            'layoutBlock'  => new \Twig_Function_Method($this, 'getLayoutBlock', array(
+                'needs_environment' => true,
+                'is_safe' => array('html')
+            )),
+        );
+    }
+
+    public function getHeadTitle(Twig_Environment $env)
+    {
+        return $env->getView()->headTitle();
+    }
+
+    public function getJavascripts(Twig_Environment $env)
+    {
+        return $env->getView()->headScript();
+    }
+
+    public function getStylesheets(Twig_Environment $env)
+    {
+        return $env->getView()->headLink();
+    }
+
+    public function getMetas(Twig_Environment $env)
+    {
+        return $env->getView()->headMeta();
+    }
+
+    public function getUrl(Twig_Environment $env, $name, array $parameters = array(), $reset = false, $encode = true)
+    {
+        return $env->getView()->url($parameters, $name, $reset = false, $encode = true);
+    }
+
+    public function getLayoutBlock(Twig_Environment $env, $name)
+    {
+        return $env->getView()->layout()->__get($name);
     }
 
     /**

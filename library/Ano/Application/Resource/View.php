@@ -56,6 +56,7 @@ class Ano_Application_Resource_View extends Zend_Application_Resource_ResourceAb
                         && true === (bool)$engineConfig['isDefault']) {                        
                         $view->setDefaultTemplateEngine($key);
                         $viewSuffix = $engine->getViewSuffix();
+                        unset($engineConfig['isDefault']);
                     }
                 }               
             }

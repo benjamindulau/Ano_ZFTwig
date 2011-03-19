@@ -33,15 +33,62 @@ class Ano_ZFTwig_View_Engine_TwigEngine extends Ano_View_Engine_Abstract
     /**
      * @param array $config Configuration key-value pairs.
      */
-    public function init($config = array())
+    public function init(array $config = array())
     {
+        $options = array();
+        if (array_key_exists('options', $config) && is_array($config['options'])) {
+            $options = $config['options'];
+        }
+        
         $loader = new Ano_ZFTwig_Loader_FileLoader($this->getView()->getScriptPaths());
-        $twig = new Ano_ZFTwig_Environment($this->getView(), $loader, $config);
-        $twig->addExtension(new Twig_Extension_Escaper(true));
-        $twig->addExtension(new Ano_ZFTwig_Extension_HelperExtension());
-        $twig->addExtension(new Ano_ZFTwig_Extension_TransExtension());
+        $twigEnvironment = new Ano_ZFTwig_Environment($this->getView(), $loader, $options);
 
-        $this->setEnvironment($twig);
+        if (array_key_exists('auto_escape', $options)) {
+            $twigEnvironment->addExtension(new Twig_Extension_Escaper((bool)$options['auto_escape']));
+        }
+
+        if (array_key_exists('extensions', $config) && is_array($config['extensions'])) {
+            foreach($config['extensions'] as $extension) {
+                $extensionClass = $extension['class'];
+                if (!class_exists($extensionClass)) {
+                    throw new Ano_ZFTwig_View_Engine_TwigEngine_Exception('Extension class doesn\'t exist: ' . $extension['class']);
+                }
+                if (array_key_exists('options', $extension) && is_array($extension['options'])) {
+                    $twigEnvironment->addExtension(new $extensionClass($extension['options']));
+                }
+                else {
+                    $twigEnvironment->addExtension(new $extensionClass());
+                }
+            }
+        }
+
+        // Globals
+        $twigEnvironment->addGlobal('zf', $twigEnvironment->getView());
+
+        $globalsClass = '';
+        $globalsName = '';
+        if (array_key_exists('globals', $config) && is_array($globals)) {
+            if (array_key_exists('class', $config['globals'])) {
+                $globalsClass = $config['globals']['class'];
+
+                if (!array_key_exists('name', $config['globals']) || empty($config['globals']['name'])) {
+                    throw new Ano_ZFTwig_View_Engine_TwigEngine_Exception('You must provide a name for globals (e.g. "app")');
+                }
+                $globalsName = $config['globals']['name'];
+                
+                if (!class_exists($globalsClass)) {
+                    throw new Ano_ZFTwig_View_Engine_TwigEngine_Exception('Class for globals doesn\'t exist: ' . $globalsClass);
+                }
+            }
+        }
+        if ($globalsClass != '' && $globalsName != '') {
+            $twigEnvironment->addGlobal($globalsName, new $globalsClass());
+        }
+        else {
+            $twigEnvironment->addGlobal('app', new Ano_ZFTwig_GlobalVariables());
+        }
+
+        $this->setEnvironment($twigEnvironment);
     }
 
     /**

@@ -48,15 +48,10 @@ abstract class Ano_View_Engine_Abstract implements Ano_View_Engine_Interface
         $this->view = $view;
         if (array_key_exists('viewSuffix', $config)) {
             $this->setViewSuffix($config['viewSuffix']);
+            unset($config['viewSuffix']);
         }
 
-        if (array_key_exists('options', $config)) {
-            $this->init($config['options']);
-        }
-        else {
-            $this->init();
-        }
-
+        $this->init($config);
     }
 
     /**

@@ -34,7 +34,7 @@ class Ano_ZFTwig_Node_HolderNode extends Twig_Node
      *
      * @param Twig_Compiler A Twig_Compiler instance
      */
-    public function compile($compiler)
+    public function compile(Twig_Compiler $compiler)
     {
         $attributes = $this->getAttribute('holder_attributes');
         

@@ -45,6 +45,11 @@ class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
      */
     public function init(array $config = array())
     {
+        $options = array();
+        if (array_key_exists('options', $config) && is_array($config['options'])) {
+            $options = $config['options'];
+        }
+
         $this->_useViewStream = (bool) ini_get('short_open_tag') ? false : true;
         if ($this->_useViewStream) {
             if (!in_array('zend.view', stream_get_wrappers())) {
@@ -53,8 +58,8 @@ class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
             }
         }
 
-        if (array_key_exists('useStreamWrapper', $config)) {
-            $this->setUseStreamWrapper($config['useStreamWrapper']);
+        if (array_key_exists('useStreamWrapper', $options)) {
+            $this->setUseStreamWrapper($options['useStreamWrapper']);
         }
     }
 
