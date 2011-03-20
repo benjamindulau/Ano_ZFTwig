@@ -1,3 +1,13 @@
+Last changes
+============
+* Makes Ano_ZFTwig compatible with last twig stable version
+* Makes better use of arrays syntaxes for consistency ([] for arrays, {} for hashes)
+* Uses the new twig's functions system for consistency (uses the {{ }} tag to display something instead of a {% %} tag)
+* Doesn't have hardcoded twig extensions adding anymore (except for Escaper). Extensions classes are explicitly defined into the configuration. Allows the user to add his own extensions.
+* Adds an "auto_escape" option into configuration
+* Adds support for twig global variables. Ano_ZFTwig_GlobalVariables is loaded by default, but this can be overriden by the user through the configuration file.
+
+
 Ano_ZFTwig
 ==========
 
@@ -39,9 +49,17 @@ The following is a example of Twig view configuration to put into your applicati
     resources.view.engines.twig.options.charset = "utf-8"
     resources.view.engines.twig.options.strict_variables = 0
     resources.view.engines.twig.options.cache = APPLICATION_PATH "/../var/cache/twig"
+    resources.view.engines.twig.options.auto_escape = 1
     resources.view.engines.twig.options.auto_reload = 1
     resources.view.engines.twig.options.debug = 0
-    resources.view.engines.twig.options.trim_blocks = 1    
+    resources.view.engines.twig.options.trim_blocks = 1
+
+    resources.view.engines.twig.extensions.helper.class = "Ano_ZFTwig_Extension_HelperExtension"
+    resources.view.engines.twig.extensions.trans.class = "Ano_ZFTwig_Extension_TransExtension"
+    ; Just add your own extensions there
+
+    resources.view.engines.twig.globals.class = "My_Twig_Globals" ; Optional default to Ano_ZFTwig_GlobalVariables
+    resources.view.engines.twig.globals.name = "app" ;the global variable name, default to "app"
 
     resources.view.helperPath.My_View_Helper_ = "My/View/Helper"
 
@@ -60,7 +78,23 @@ The view renderer will automatically render a twig template from files with the 
 
 For general usage, read the documentation from the official website : http://www.twig-project.org/documentation
 
-You can use Zend_Layout with Twig but be aware that you won't be able to use twig templates inheritance with the layout, because in ZF, the view is rendered before the layout. So, some tags with depends on twig context won't work, like "block", "set".
+You can use Zend_Layout with Twig but be aware that you won't be able to use twig templates inheritance with the layout, because in ZF, the view is rendered before the layout. So, some tags which depends on twig context won't work, like "block", "set".
+
+Global variables
+----------------
+
+Ano_ZFTwig comes with default twig global variables (can be overriden through config file).
+It contains only two variables for now :
+
+* app
+
+        {% if app.environment == 'production' %}
+            {# some stuff, e.g google analytics #}
+        {% endif %}
+
+* zf : returns the current view instance, can be used inside a {{ }} tags to display any helper return value
+
+        {{ zf.myHelper() }}
 
 
 Tags coming with Ano_ZFTwig
@@ -70,25 +104,27 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 
 * Invoke any view helper :
 
-        {% hlp 'myHelper' with ['arg1', ['key1': 'val1', 'key2': 'val2'], 'arg3'] %}
-	
-    (i.e. {% hlp 'url' with [['controller': 'index', 'action': 'my-action'], 'my_route'] %} )
-	
+        {% hlp 'myHelper' with ['arg1', {'key1': 'val1', 'key2': 'val2'}, 'arg3'] %}
+
+* Invoke any view helper which "display/returns" something :
+
+	    {{ zf.myHelper('something') }}
+
 * Adding a javascript file to the stack :
 
         {% javascript 'js/blog.js' %}
 	
 * Rendering javascript html tags (i.e. in the head section) :
 
-        {% javascripts %}
+        {{ javascripts() }}
 	
 * Adding a stylesheet link to the stack :
 
-        {% stylesheet 'css/blog.css' with ['media': 'screen'] %}
+        {% stylesheet 'css/blog.css' with {'media': 'screen'} %}
 
 * Rendering stylesheet links (i.e. in the head section) :
 
-        {% stylesheets %}
+        {{ stylesheets() }}
 	
 * Adding a meta http-equiv to the stack :
 
@@ -100,23 +136,15 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 	
 * Rendering meta tags (i.e. in the head section) :
 
-        {% metas %}
+        {{ metas() }}
 	
 * Generate an url from a route :
 
-        {% route 'my_route' with ['id': post.id] %}
+        {{ url('my_route', {'id': post.id}) %}
 
 * Include layout section :
 
-        {% layout 'content' %} (= <?php echo $this->layout()->content; ?>
-
-* Setting a placeholder :
-
-        {% holder 'titleh1' with 'My super title' %}
-
-* Displaying a placeholder :
-    
-        {% holder 'titleh1' %}
+        {{ layoutBlock('content') }} (= <?php echo $this->layout()->content; ?>
 
 * Translate a message
 
@@ -143,13 +171,13 @@ Usage example
                 {% stylesheet 'css/layout.css' %}
             {% endblock %}
 
-            {% metas %}
-            {% javascripts %}
-            {% stylesheets %}
+            {{ metas() }}
+            {{ javascripts() }}
+            {{ stylesheets() }}
         </head>
         <body>
             <h1>{% block 'title1' 'Default Title' %}</h1>
-            {% block content %}{% endblock %}
+            {{ block('content') }}
         </body>
 
 * twig-help.twig
@@ -159,15 +187,15 @@ Usage example
         {% block title 'Anonymation - Twig for Zend Framework' %}
 
         {% block metas %}
-            {% parent %}
+            {{ parent() }}
             {% metaName 'description' with 'My super twig description for SEO' %}
         {% endblock %}
         {% block javascripts %}
-            {% parent %}
+            {{ parent() }}
             {% javascript 'js/twig.js' %}
         {% endblock %}
         {% block stylesheets %}
-            {% parent %}
+            {{ parent() }}
             {% stylesheet 'css/twig.css' %}
         {% endblock %}
 
@@ -181,10 +209,10 @@ Usage example
                     <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
                 </p>
             </div>
-            <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
+            <a href="{{ url('default', {'controller': 'index', 'action': 'index'}) }}">
                 &lt; Back to homepage
             </a>
-        {% endblock %}
+        {% endblock content %}
 
 
 ### With Zend_Layout
@@ -192,18 +220,18 @@ Usage example
 * layout.twig :
 
         <head>
-            {% title %}
+            {{ headTitle() }}
             {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
-            {% javascript 'js/jquery.js' with ['mode': 'prepend'] %}
-            {% stylesheet 'css/layout.css' with ['mode': 'prepend'] %}
-            <base href="{% hlp 'serverUrl' %}/{% hlp 'baseUrl' %}" />
-            {% metas %}
-            {% javascripts %}
-            {% stylesheets %}
+            {% javascript 'js/jquery.js' with {'mode': 'prepend'} %}
+            {% stylesheet 'css/layout.css' with {'mode': 'prepend'} %}
+            <base href="{{ zf.serverUrl() }}/{{ zf.baseUrl() }}" />
+            {{ metas() }}
+            {{ javascripts() }}
+            {{ stylesheets() }}
         </head>
         <body>
-            <h1>{% holder 'title1' %}</h1>
-            {% layout 'content' %}
+            <h1>{{ block('title1') }}</h1>
+            {{ layoutBlock('content') }}
         </body>
 
 * twig-help.twig :
@@ -213,7 +241,7 @@ Usage example
         {% headTitle 'Anonymation - Twig for Zend Framework' %}
         {% metaName 'description' with 'My super twig description for SEO' %}
         {% javascript 'js/twig.js' %}
-        {% holder 'title1' with 'Some help about Twig' %}
+        {% block title1 'Some help about Twig' %}
 
         {# content #}
            <div id="more-information">
@@ -223,6 +251,6 @@ Usage example
                     <a href="http://github.com/benjamindulau/Ano_ZFTwig">Ano_ZFTwig source code</a>
                 </p>
             </div>
-            <a href="{% route 'default' with ['controller': 'index', 'action': 'index'] %}">
+            <a href="{{ url('default', {'controller': 'index', 'action': 'index'}) }}">
                 &lt; Back to homepage
             </a>
