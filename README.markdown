@@ -116,6 +116,10 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 * Adding a javascript file to the stack :
 
         {% javascript 'js/blog.js', {'mode': 'append', 'attrs': {'conditional': 'lt IE 7'}} %}
+
+* Adding a inline javascript:
+
+        {% javascript '$(function() {$("#tabs").tabs();});', {'mode': 'script', 'source': 'script'} %}
 	
 * Rendering javascript html tags (i.e. in the head section) :
 
