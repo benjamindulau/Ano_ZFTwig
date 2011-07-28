@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the Ano_ZFTwig package
- * 
+ *
  * LICENSE
  *
  * This source file is subject to the new BSD license that is bundled
@@ -37,6 +37,8 @@ class Ano_ZFTwig_Node_JavascriptNode extends Twig_Node
     {
         $options = $this->getNode('options');
         $mode = $options->hasNode('mode') ? $options->getNode('mode')->getAttribute('value') : 'append';
+        $source = $options->hasNode('source') ? $options->getNode('source')->getAttribute('value') : 'file';
+        $source = ucfirst(strtolower($source));
         $type = $options->hasNode('type') ? $options->getNode('type')->getAttribute('value') : 'text/javascript';
         $attrs = $options->hasNode('attrs') ? $options->getNode('attrs') : false;
         $offset = $options->hasNode('offset') ? $options->getNode('offset') : false;
@@ -46,13 +48,13 @@ class Ano_ZFTwig_Node_JavascriptNode extends Twig_Node
             ->write("\$this->env->getView()->headScript()->");
 
         if (false === $offset) {
-            $method = ($mode == 'prepend') ? 'prependFile' : 'appendFile';
+            $method = (($mode == 'prepend') ? 'prepend' : 'append') . $source;
             $compiler
                 ->write("$method(");
         }
         else {
             $compiler
-                ->write('offsetSetFile(')
+                ->write('offsetSet' . $source . '(')
                 ->subcompile($offset)
                 ->raw(', ');
         }
