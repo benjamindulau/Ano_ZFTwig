@@ -115,7 +115,7 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 
 * Adding a javascript file to the stack :
 
-        {% javascript 'js/blog.js', {'mode': 'append', attrs: {'conditional': 'lt IE 7'}} %}
+        {% javascript 'js/blog.js', {'mode': 'append', 'attrs': {'conditional': 'lt IE 7'}} %}
 	
 * Rendering javascript html tags (i.e. in the head section) :
 
@@ -123,7 +123,7 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 	
 * Adding a stylesheet link to the stack :
 
-        {% stylesheet 'css/blog.css', {'mode': 'append', 'media': 'screen', attrs: {'id': 'my_stylesheet'}} %}
+        {% stylesheet 'css/blog.css', {'mode': 'append', 'media': 'screen', 'attrs': {'id': 'my_stylesheet'}} %}
 
 * Rendering stylesheet links (i.e. in the head section) :
 

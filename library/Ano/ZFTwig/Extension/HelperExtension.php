@@ -34,10 +34,10 @@ class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
             // {% headTitle 'My page title' %}
             new Ano_ZFTwig_TokenParser_HeadTitleTokenParser(),
 
-            // {% javascript 'js/blog.js', {'mode': 'append', attrs: {'conditional': 'lt IE 7'}} %}
+            // {% javascript 'js/blog.js', {'mode': 'append', 'attrs': {'conditional': 'lt IE 7'}} %}
             new Ano_ZFTwig_TokenParser_JavascriptTokenParser(),
 
-            // {% stylesheet 'css/blog.css', {'mode': 'append', 'media': 'screen', attrs: {'id': 'my_stylesheet'}} %}
+            // {% stylesheet 'css/blog.css', {'mode': 'append', 'media': 'screen', 'attrs': {'id': 'my_stylesheet'}} %}
             new Ano_ZFTwig_TokenParser_StylesheetTokenParser(),
 
             // {% meta, {'name': 'description', 'content': 'My super website SEO description'} %}
