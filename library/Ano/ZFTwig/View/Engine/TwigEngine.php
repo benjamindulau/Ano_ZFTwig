@@ -67,7 +67,7 @@ class Ano_ZFTwig_View_Engine_TwigEngine extends Ano_View_Engine_Abstract
 
         $globalsClass = '';
         $globalsName = '';
-        if (array_key_exists('globals', $config) && is_array($globals)) {
+        if (array_key_exists('globals', $config) && is_array($config['globals'])) {
             if (array_key_exists('class', $config['globals'])) {
                 $globalsClass = $config['globals']['class'];
 

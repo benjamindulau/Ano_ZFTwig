@@ -32,19 +32,17 @@ class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
     {
         return array(
             // {% headTitle 'My page title' %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('headTitle', '<title>', 'headTitle', ''),
+            new Ano_ZFTwig_TokenParser_HeadTitleTokenParser(),
 
-            // {% javascript 'js/blog.js' %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('javascript', '<js> [with <array>]', 'headScript', '%mode%File'),
+            // {% javascript 'js/blog.js', {'mode': 'append', attrs: {'conditional': 'lt IE 7'}} %}
+            new Ano_ZFTwig_TokenParser_JavascriptTokenParser(),
 
-            // {% stylesheet 'css/blog.css' with ['media': 'screen'] %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('stylesheet', '<css> [with <array>]', 'headLink', '%mode%Stylesheet'),
+            // {% stylesheet 'css/blog.css', {'mode': 'append', 'media': 'screen', attrs: {'id': 'my_stylesheet'}} %}
+            new Ano_ZFTwig_TokenParser_StylesheetTokenParser(),
 
-            // {% metaName 'description' 'My super website SEO description' %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('metaName', '<metaName> [with <constant>]', 'headMeta', '%mode%Name'),
-
-            // {% metaHttpEquiv 'Content-Type' 'text/html; charset=utf-8' %}
-            new Ano_ZFTwig_TokenParser_DefaultHelperTokenParser('metaHttpEquiv', '<metaHttpEquiv> [with <constant>]', 'headMeta', '%mode%HttpEquiv'),
+            // {% meta, {'name': 'description', 'content': 'My super website SEO description'} %}
+            // {% meta, {'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8'} %}
+            new Ano_ZFTwig_TokenParser_MetaTokenParser(),
 
             // {% hlp 'helper' with [with <arguments:array>] %}
             new Ano_ZFTwig_TokenParser_HelperTokenParser(),
@@ -111,7 +109,7 @@ class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
 
     public function getUrl(Twig_Environment $env, $name, array $parameters = array(), $reset = false, $encode = true)
     {
-        return $env->getView()->url($parameters, $name, $reset = false, $encode = true);
+        return $env->getView()->url($parameters, $name, $reset, $encode);
     }
 
     public function getLayoutBlock(Twig_Environment $env, $name)

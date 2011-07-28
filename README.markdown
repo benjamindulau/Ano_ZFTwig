@@ -1,5 +1,8 @@
 Last changes
 ============
+
+****** Changed the way some tags work. Removed the DefaultHelperTokenParser, and added a dedicated parser for each tag ******
+
 * Makes Ano_ZFTwig compatible with last twig stable version
 * Makes better use of arrays syntaxes for consistency ([] for arrays, {} for hashes)
 * Uses the new twig's functions system for consistency (uses the {{ }} tag to display something instead of a {% %} tag)
@@ -112,7 +115,7 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 
 * Adding a javascript file to the stack :
 
-        {% javascript 'js/blog.js' %}
+        {% javascript 'js/blog.js', {'mode': 'append', attrs: {'conditional': 'lt IE 7'}} %}
 	
 * Rendering javascript html tags (i.e. in the head section) :
 
@@ -120,7 +123,7 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 	
 * Adding a stylesheet link to the stack :
 
-        {% stylesheet 'css/blog.css' with {'media': 'screen'} %}
+        {% stylesheet 'css/blog.css', {'mode': 'append', 'media': 'screen', attrs: {'id': 'my_stylesheet'}} %}
 
 * Rendering stylesheet links (i.e. in the head section) :
 
@@ -128,11 +131,11 @@ Here are the syntaxes for the twig tags coming with Ano_ZFTwig
 	
 * Adding a meta http-equiv to the stack :
 
-        {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
+        {% meta, {'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8', 'mode': 'append'} %}
 	
 * Adding a regular meta to the stack :
 	
-        {% metaName 'description' with 'My super website SEO description' %}
+        {% meta, {'name': 'description', 'content': 'My super website SEO description', 'mode': 'append'} %}
 	
 * Rendering meta tags (i.e. in the head section) :
 
@@ -221,9 +224,9 @@ Usage example
 
         <head>
             {{ headTitle() }}
-            {% metaHttpEquiv 'Content-Type' with 'text/html; charset=utf-8' %}
-            {% javascript 'js/jquery.js' with {'mode': 'prepend'} %}
-            {% stylesheet 'css/layout.css' with {'mode': 'prepend'} %}
+            {% meta, {'http-equiv': 'Content-Type', 'content': 'text/html; charset=utf-8'} %}
+            {% javascript 'js/jquery.js', {'mode': 'prepend'} %}
+            {% stylesheet 'css/layout.css', {'mode': 'prepend'} %}
             <base href="{{ zf.serverUrl() }}/{{ zf.baseUrl() }}" />
             {{ metas() }}
             {{ javascripts() }}
@@ -239,9 +242,8 @@ Usage example
         {# layout override #}
 
         {% headTitle 'Anonymation - Twig for Zend Framework' %}
-        {% metaName 'description' with 'My super twig description for SEO' %}
+        {% meta, {'name': 'description', 'content': 'My super twig description for SEO'} %}
         {% javascript 'js/twig.js' %}
-        {% block title1 'Some help about Twig' %}
 
         {# content #}
            <div id="more-information">
