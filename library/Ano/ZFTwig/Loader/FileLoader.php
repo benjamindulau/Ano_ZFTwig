@@ -33,6 +33,6 @@ class Ano_ZFTwig_Loader_FileLoader extends Twig_Loader_Filesystem
             throw new Twig_Error_Loader(sprintf('The "%s" directory does not exist.', $path));
         }
 
-	$this->paths[$namespace][] = rtrim($path, '/\\');
+        $this->paths[$namespace][] = rtrim($path, '/\\');
     }
 }
