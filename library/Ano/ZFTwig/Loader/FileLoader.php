@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the Ano_ZFTwig package
- * 
+ *
  * LICENSE
  *
  * This source file is subject to the new BSD license that is bundled
@@ -27,12 +27,12 @@ class Ano_ZFTwig_Loader_FileLoader extends Twig_Loader_Filesystem
      *
      * @param string $path The directory to add
      */
-    public function addPath($path)
+    public function addPath($path, $namespace = '__main__')
     {
         if (!is_dir($path)) {
             throw new Twig_Error_Loader(sprintf('The "%s" directory does not exist.', $path));
         }
 
-        $this->paths[] = realpath($path);
+        $this->paths[$namespace][] = rtrim($path, '/\\');
     }
 }
