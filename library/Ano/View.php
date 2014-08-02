@@ -25,17 +25,17 @@ class Ano_View extends Zend_View_Abstract
     /**
      * @var array Array Template engines list, key-value pairs
      */
-    protected $templateEngines = array();
+    protected $_templateEngines = array();
 
     /**
      * @var string Key in $templateEngines of the default engine
      */
-    protected $defaultTemplateEngine = null;
+    protected $_defaultTemplateEngine = null;
 
     /**
      * @var string Key in $templateEngines of current template Engine
      */
-    protected $templateEngine = null;
+    protected $_templateEngine = null;
 
 
     /**
@@ -45,7 +45,7 @@ class Ano_View extends Zend_View_Abstract
      */
     public function setDefaultTemplateEngine($key)
     {
-        $this->defaultTemplateEngine = $key;
+        $this->_defaultTemplateEngine = $key;
         return $this;
     }
 
@@ -54,7 +54,7 @@ class Ano_View extends Zend_View_Abstract
      */
     public function getDefaultTemplateEngine()
     {
-        return $this->defaultTemplateEngine;
+        return $this->_defaultTemplateEngine;
     }
 
     /**
@@ -64,7 +64,7 @@ class Ano_View extends Zend_View_Abstract
      */
     public function setTemplateEngine($key)
     {
-        $this->templateEngine = $key;
+        $this->_templateEngine = $key;
         return $this;
     }
 
@@ -77,7 +77,7 @@ class Ano_View extends Zend_View_Abstract
      */
     public function hasTemplateEngine($key)
     {
-        return array_key_exists($key, $this->templateEngines);
+        return array_key_exists($key, $this->_templateEngines);
     }
 
     /**
@@ -89,14 +89,14 @@ class Ano_View extends Zend_View_Abstract
      */
     public function getTemplateEngine()
     {
-        $currentEngine = $this->templateEngine;
+        $currentEngine = $this->_templateEngine;
         if ($this->hasTemplateEngine($currentEngine)) {
-            return $this->templateEngines[$currentEngine];
+            return $this->_templateEngines[$currentEngine];
         }
 
-        $defaultEngine = $this->defaultTemplateEngine;
+        $defaultEngine = $this->_defaultTemplateEngine;
         if ($this->hasTemplateEngine($defaultEngine)) {
-            return $this->templateEngines[$defaultEngine];
+            return $this->_templateEngines[$defaultEngine];
         }
 
         require_once 'Zend/View/Exception.php';
@@ -113,7 +113,7 @@ class Ano_View extends Zend_View_Abstract
      */
     public function addTemplateEngine($key, Ano_View_Engine_Interface $templateEngine)
     {
-        $this->templateEngines[$key] = $templateEngine;
+        $this->_templateEngines[$key] = $templateEngine;
         return $this;
     }
 
