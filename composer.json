@@ -1,0 +1,19 @@
+{
+    "name": "ano/zf-twig",
+    "description": "Ano_ZFTwig allows the use of twig with Zend Framework 1.1x.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Dulau",
+            "email": "benjamin.dulau@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"": "library/"}
+    },
+    "require": {
+        "zendframework/zendframework1": "1.*",
+        "twig/twig": "1.*"
+    }
+}
