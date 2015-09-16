@@ -19,8 +19,6 @@
  * @author      Benjamin Dulau <benjamin.dulau@gmail.com>
  */
 
-require_once 'Ano/View/Engine/Interface.php';
-
 abstract class Ano_View_Engine_Abstract implements Ano_View_Engine_Interface
 {
     /**

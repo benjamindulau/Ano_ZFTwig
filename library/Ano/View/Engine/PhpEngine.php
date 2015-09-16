@@ -19,8 +19,6 @@
  * @author     Benjamin Dulau <benjamin.dulau@gmail.com>
  */
 
-require_once 'Ano/View/Engine/Abstract.php';
-
 class Ano_View_Engine_PhpEngine extends Ano_View_Engine_Abstract
 {
     /**
