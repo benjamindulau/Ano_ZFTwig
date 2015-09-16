@@ -10,7 +10,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"": "library/"}
+        "psr-0": {"": "library/"}
     },
     "require": {
         "zendframework/zendframework1": "1.*",
