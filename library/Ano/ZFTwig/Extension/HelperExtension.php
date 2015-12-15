@@ -60,27 +60,27 @@ class Ano_ZFTwig_Extension_HelperExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'headTitle'    => new \Twig_SimpleFunction($this, 'getHeadTitle', array(
+            'headTitle'    => new \Twig_SimpleFunction('headTitle', array($this, 'getHeadTitle'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
-            'javascripts'  => new \Twig_SimpleFunction($this, 'getJavascripts', array(
+            'javascripts'  => new \Twig_SimpleFunction('javascripts', array($this, 'getJavascripts'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
-            'stylesheets'  => new \Twig_SimpleFunction($this, 'getStylesheets', array(
+            'stylesheets'  => new \Twig_SimpleFunction('stylesheets', array($this, 'getStylesheets'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
-            'metas'  => new \Twig_SimpleFunction($this, 'getMetas', array(
+            'metas'  => new \Twig_SimpleFunction('metas', array($this, 'getMetas'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
-            'url'  => new \Twig_SimpleFunction($this, 'getUrl', array(
+            'url'  => new \Twig_SimpleFunction('url', array($this, 'getUrl'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
-            'layoutBlock'  => new \Twig_SimpleFunction($this, 'getLayoutBlock', array(
+            'layoutBlock'  => new \Twig_SimpleFunction('layoutBlock', array($this, 'getLayoutBlock'), array(
                 'needs_environment' => true,
                 'is_safe' => array('html')
             )),
