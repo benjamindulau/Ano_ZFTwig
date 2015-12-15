@@ -29,7 +29,7 @@ class Ano_ZFTwig_Extension_TransExtension extends Twig_Extension
     {
         return array(
             // {% tag "message"|trans %}
-            'trans' => new Twig_Filter_Method($this, 'trans', array('needs_environment' => true)),
+            'trans' => new Twig_SimpleFilter($this, 'trans', array('needs_environment' => true)),
         );
     }
 
